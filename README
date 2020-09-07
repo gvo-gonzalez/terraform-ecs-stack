@@ -1,0 +1,23 @@
+This project setups AWS ECS Stack to be used for running your containerized applications
+
+Include a Jenkins(bastion host to your private instances) setup so you con apply CI/CD by :
+
+	- clone your project
+	- building your images
+	- push to ECR
+	- update terraform service running
+		terraform apply --target="terraform-service-task" -var app_services_enabled=1 -var php_stack_init_appversion=
+
+Requirements:
+
+1. Create your own ssh-keys to upload with the following command
+
+	ssh-keygen -t rsa -b 2048 -f awskeys/ecs-stack-key
+
+2. Install terraform
+
+3. terraform plan -out='your-plan.out'
+
+4. terraform apply "your-plan.out"
+
+5 Export your tfstate file to S3  configured for this task 

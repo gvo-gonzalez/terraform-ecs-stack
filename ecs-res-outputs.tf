@@ -1,0 +1,17 @@
+#output  "ecsstack-ecr-noderepo-created" {
+#    value   = aws_ecr_repository.ecsstack-node-ecr-repo.repository_url
+#}
+# ecsstack-ecr-repo
+output  "ecsstack-ecr-laravelrepo-created" {
+    value   = aws_ecr_repository.ecsstack-ecr-repo.repository_url
+}
+
+output "jenkins-ip-address" {
+    value   = aws_instance.ecsstack-jenkins-builder.public_ip
+}
+
+output "ecsstack-load-balancer" {
+    value   = aws_lb.ecsstack-lb.dns_name
+}
+
+
