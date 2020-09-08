@@ -1,7 +1,7 @@
-aws_region      = "us-east-1"
-aws_accessKey   = "AKIA54NIH4DDUQEVINCD"
-aws_secretKey   = "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"
-ssl_certificate_arn = "arn:aws:acm:us-east-1:954372448455:certificate/b1d64000-b176-403a-a17f-e722aeee5f5c"
+aws_region      = ""
+aws_accessKey   = ""
+aws_secretKey   = ""
+ssl_certificate_arn = ""
 instance_type   = "t2.micro"
 asg_minSize     = 1
 asg_maxSize     = 2
@@ -37,6 +37,6 @@ final_snapshot_on_destroy  = true
 nginx_conf_fastcgi_pass = "single-proj"
 
 # Remote terraform backend states
-tfstate_bucket = "s3tfstates.domain.com"
+tfstate_bucket = "s3tfstates.sarasa.com"
 tfstate_key = "global/s3/terraform.tfstate"
 tfstates_lockdb = "terraform-dblocking-states"
