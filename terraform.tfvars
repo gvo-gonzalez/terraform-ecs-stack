@@ -38,6 +38,6 @@ final_snapshot_on_destroy  = true
 nginx_conf_fastcgi_pass = "single-proj"
 
 # Remote terraform backend states
-tfstate_bucket = "s3tfstates.gvoweblab.com"
+tfstate_bucket = "s3tfstates.domain.com"
 tfstate_key = "global/s3/terraform.tfstate"
 tfstates_lockdb = "terraform-dblocking-states"
