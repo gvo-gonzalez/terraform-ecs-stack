@@ -1,18 +1,16 @@
-aws_region      = ""
-aws_accessKey   = ""
-aws_secretKey   = ""
-ssl_certificate_arn = ""
+aws_region      = "us-east-1"
+aws_accessKey   = "AKIA54NIH4DDUQEVINCD"
+aws_secretKey   = "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"
+ssl_certificate_arn = "arn:aws:acm:us-east-1:954372448455:certificate/b1d64000-b176-403a-a17f-e722aeee5f5c"
 instance_type   = "t2.micro"
 asg_minSize     = 1
 asg_maxSize     = 2
 
 # Set ssh_keys that will load our instances
-pub_sshkey_path             = "awskeys/your_key.pub"
+pub_sshkey_path             = "/hostShared/terraform/awskeys/awsecs_key.pub"
 jenkins_ec2_type            = "t2.micro"
 ebs_device_name             = "/dev/xvdh"
 ecs_cluster_name            = "ecsstack-ecs-cluster"
-
-# Parameters to be passed into task definition template
 container_name              = "ecsstack-node-sample"
 app_working_dir             = "/usr/local/app"
 phpapp_container_name       = "ecsstack-laravel-sample"
@@ -36,9 +34,9 @@ db_storage_alloc        = 100
 db_storage_type         = "gp2"
 db_bkp_retention        = 30
 final_snapshot_on_destroy  = true
-nginx_conf_fastcgi_pass = "endpoint name fom the container that runs php-fpm always shows like 'app:9000'"
+nginx_conf_fastcgi_pass = "single-proj"
 
 # Remote terraform backend states
-tfstate_bucket = "s3tfstates.your-domain.com"
+tfstate_bucket = "s3tfstates.gvoweblab.com"
 tfstate_key = "global/s3/terraform.tfstate"
 tfstates_lockdb = "terraform-dblocking-states"
