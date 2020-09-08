@@ -1,15 +1,16 @@
-aws_region      = "us-east-1"
-aws_accessKey   = "AKIA54NIH4DDUQEVINCD"
-aws_secretKey   = "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"
-ssl_certificate_arn = "arn:aws:acm:us-east-1:954372448455:certificate/b1d64000-b176-403a-a17f-e722aeee5f5c"
+aws_region      = ""
+aws_accessKey   = ""
+aws_secretKey   = ""
+ssl_certificate_arn = ""
 instance_type   = "t2.micro"
 asg_minSize     = 1
 asg_maxSize     = 2
 
 # Set ssh_keys that will load our instances
-pub_sshkey_path             = "/hostShared/terraform/awskeys/awsecs_key.pub"
+pub_sshkey_path             = "/path/to/ssh_key.pub"
 jenkins_ec2_type            = "t2.micro"
 ebs_device_name             = "/dev/xvdh"
+# Variables required to configure task definition
 ecs_cluster_name            = "ecsstack-ecs-cluster"
 container_name              = "ecsstack-node-sample"
 app_working_dir             = "/usr/local/app"
