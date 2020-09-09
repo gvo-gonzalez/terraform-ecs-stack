@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "tf-states-bucket" {
     bucket    = var.tfstate_bucket
-
+    force_destroy   = true
     versioning  {
         enabled = true
     }
@@ -35,19 +35,4 @@ resource "aws_dynamodb_table" "tf-states-locking-db" {
 #        dynamodb_table  = "terraform-dblocking-states"
 #        encrypt         = true
 #    }
-#}
-#terraform {
-#    backend "s3" {}
-#}
-
-#data "terraform_remote_state" "rstate" {
-#    backed = "s3"
-#    config {
-#        bucket  = "s3tfstates.gvoweblab.com"#var.tfstate_bucket
-#        key     = "global/s3/terraform.tfstate"#var.tfstate_key 
-#        region  = "us-east-1"
-#        dynamodb_table  = "terraform-dblocking-states"#var.tfstates_lockdb
-#        encrypt         = true
-#
-#    }    
 #}

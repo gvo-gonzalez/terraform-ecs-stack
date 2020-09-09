@@ -19,6 +19,16 @@ ecr_stack_repo_name         = "ecsstack-ecr-repo"
 app_services_enabled        = 1
 js_stack_init_appversion    = 0
 php_stack_init_appversion   = 0
+nodeapp_container_memory_size   = "256" 
+nodeapp_container_cpu_size      = "128"
+nodeapp_host_port               = "8080"
+nodeapp_container_port          = "3000"
+nginx_container_memory_size     = "256"
+nginx_container_cpu_size        = "128"
+nginx_host_port                 = "80"
+nginx_container_port            = "80"
+app_container_memory_size       = "512"
+app_container_cpu_size          = "256"
 
 # RDS variables
 db_param_group_family   = "mariadb10.2"   

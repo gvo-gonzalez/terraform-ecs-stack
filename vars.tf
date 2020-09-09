@@ -20,6 +20,17 @@ variable    "app_services_enabled" {}
 variable    "js_stack_init_appversion" {}
 variable    "php_stack_init_appversion" {}
 variable    "nginx_conf_fastcgi_pass" {}
+variable    "nodeapp_container_memory_size"   {} 
+variable    "nodeapp_container_cpu_size"      {}
+variable    "nodeapp_host_port"               {}
+variable    "nodeapp_container_port"          {}
+variable    "nginx_container_memory_size"     {}
+variable    "nginx_container_cpu_size"        {}
+variable    "nginx_host_port"                 {}
+variable    "nginx_container_port"            {}
+variable    "app_container_memory_size"       {}
+variable    "app_container_cpu_size"          {}
+
 # RDS Section
 variable db_param_group_family  {}
 variable db_engine              {}

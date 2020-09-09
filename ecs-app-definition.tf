@@ -10,32 +10,42 @@ resource "aws_ecs_cluster" "ecsstack-ecs-cluster" {
 
 # Defines Template with our task definition for node service
 data "template_file" "ecsstack-task-template" {
-    template    = file("templates/app-task.json.tpl")
+    template    = file("templates/nodejs-task-deinition.json.tpl")
     vars = {
         # Vars for node service
-        JS_CONTAINER_NAME   = var.container_name
-        JS_REPOSITORY_URL   = replace(aws_ecr_repository.ecsstack-ecr-repo.repository_url, "https://", "")
-        JS_APP_WORK_DIR     = var.app_working_dir
-        JS_APP_VERSION      = var.js_stack_init_appversion
-        
+        NODE_CONTAINER_NAME     = var.container_name
+        NODE_REPOSITORY_URL     = replace(aws_ecr_repository.ecsstack-ecr-repo.repository_url, "https://", "")
+        NODE_APP_WORK_DIR       = var.app_working_dir
+        NODE_APP_VERSION        = var.js_stack_init_appversion
+        NODE_MEMORY_SIZE        = var.nodeapp_container_memory_size
+        NODE_CPU_SIZE           = var.nodeapp_container_cpu_size
+        NODE_HOST_PORT          = var.nodeapp_host_port
+        NODE_CONTAINER_PORT     = var.nodeapp_container_port
     }
 }
 
 # Defines Template with our task configuration for laravel service
 data "template_file" "ecsstack-php-task-template" {
-    template    = file("templates/php-fpm-nginx-task.json.tpl")
+    template    = file("templates/nginx-laravel-task-definition.json.tpl")
     vars = {
         # Vars for laravel services
-        PHP_CONTAINER_NAME  = var.phpapp_container_name
-        PHP_REPOSITORY_URL  = replace(aws_ecr_repository.ecsstack-ecr-repo.repository_url, "https://", "")
-        PHP_APP_WORK_DIR    = var.phpapp_working_dir
-        PHP_APP_VERSION     = var.php_stack_init_appversion
-        PHP_FPM             = var.nginx_conf_fastcgi_pass
+        NGINX_CONTAINER_NAME    = var.phpapp_container_name
+        STACK_REPOSITORY_URL    = replace(aws_ecr_repository.ecsstack-ecr-repo.repository_url, "https://", "")
+        APP_WORK_DIR            = var.phpapp_working_dir
+        APP_VERSION             = var.php_stack_init_appversion
+        APP                     = var.nginx_conf_fastcgi_pass
+        NGINX_MEMORY_SIZE       = var.nginx_container_memory_size
+        NGINX_CPU_SIZE          = var.nginx_container_cpu_size
+        NGINX_HOST_PORT         = var.nginx_host_port
+        NGINX_CONTAINER_PORT    = var.nginx_container_port
+        APP_MEMORY_SIZE         = var.app_container_memory_size
+        APP_CPU_SIZE            = var.app_container_cpu_size
     }
 }
 
 resource "aws_ecs_task_definition" "ecsstack-task-definition" {
-    family  = "nodejs-ecsstack"
+    family          = "nodejs-server"
+    network_mode    = "bridge"
     container_definitions   = data.template_file.ecsstack-task-template.rendered
 }
 
