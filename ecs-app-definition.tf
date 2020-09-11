@@ -13,14 +13,14 @@ data "template_file" "ecsstack-task-template" {
     template    = file("templates/nodejs-task-deinition.json.tpl")
     vars = {
         # Vars for node service
-        NODE_CONTAINER_NAME     = var.container_name
+        NODE_CONTAINER_NAME     = var.nodecontainer_name
         NODE_REPOSITORY_URL     = replace(aws_ecr_repository.ecsstack-ecr-repo.repository_url, "https://", "")
-        NODE_APP_WORK_DIR       = var.app_working_dir
-        NODE_APP_VERSION        = var.js_stack_init_appversion
-        NODE_MEMORY_SIZE        = var.nodeapp_container_memory_size
-        NODE_CPU_SIZE           = var.nodeapp_container_cpu_size
-        NODE_HOST_PORT          = var.nodeapp_host_port
-        NODE_CONTAINER_PORT     = var.nodeapp_container_port
+        NODE_APP_WORK_DIR       = var.nodeapp_working_dir
+        NODE_APP_VERSION        = var.nodeapp_version_on_setup
+#        NODE_MEMORY_SIZE        = var.nodeapp_container_memory_size
+#        NODE_CPU_SIZE           = var.nodeapp_container_cpu_size
+#        NODE_HOST_PORT          = var.nodeapp_host_port
+#        NODE_CONTAINER_PORT     = var.nodeapp_container_port
     }
 }
 
@@ -32,14 +32,14 @@ data "template_file" "ecsstack-php-task-template" {
         NGINX_CONTAINER_NAME    = var.phpapp_container_name
         STACK_REPOSITORY_URL    = replace(aws_ecr_repository.ecsstack-ecr-repo.repository_url, "https://", "")
         APP_WORK_DIR            = var.phpapp_working_dir
-        APP_VERSION             = var.php_stack_init_appversion
-        APP                     = var.nginx_conf_fastcgi_pass
-        NGINX_MEMORY_SIZE       = var.nginx_container_memory_size
-        NGINX_CPU_SIZE          = var.nginx_container_cpu_size
-        NGINX_HOST_PORT         = var.nginx_host_port
-        NGINX_CONTAINER_PORT    = var.nginx_container_port
-        APP_MEMORY_SIZE         = var.app_container_memory_size
-        APP_CPU_SIZE            = var.app_container_cpu_size
+        APP_VERSION             = var.phpapp_version_on_setup
+        BACKEND_APP             = var.nginx_fastcgi_app
+#        NGINX_MEMORY_SIZE       = var.nginx_container_memory_size
+#        NGINX_CPU_SIZE          = var.nginx_container_cpu_size
+#        NGINX_HOST_PORT         = var.nginx_host_port
+#        NGINX_CONTAINER_PORT    = var.nginx_container_port
+#        APP_MEMORY_SIZE         = var.app_container_memory_size
+#        APP_CPU_SIZE            = var.app_container_cpu_size
     }
 }
 
@@ -61,18 +61,18 @@ resource "aws_ecs_task_definition" "ecsstack-php-task-definition" {
 # Creates ECS Service
 resource "aws_ecs_service" "ecsstack-ecs-service" {
     # Run this statement not only the first time
-    count = var.app_services_enabled
+    #count = var.svc_running_tasks
     name    = "ecsstack-ecs-service"
     cluster = aws_ecs_cluster.ecsstack-ecs-cluster.id
     task_definition = aws_ecs_task_definition.ecsstack-task-definition.arn
-    desired_count   = 1
+    desired_count   = var.svc_running_tasks
     iam_role    = aws_iam_role.ecsstack-service-role.arn
     depends_on  = [aws_iam_policy_attachment.ecsstack-service-attach]
 
     load_balancer   {
         target_group_arn    = aws_lb_target_group.ecsstack-lb-node-target.arn
-        container_name  = var.container_name
-        container_port  = 3000
+        container_name      = var.nodecontainer_name
+        container_port      = 3000
     }
 
     lifecycle {
@@ -83,18 +83,18 @@ resource "aws_ecs_service" "ecsstack-ecs-service" {
 
 resource "aws_ecs_service" "ecsstack-php-ecs-service" {
     # Run this statement not only the first time
-    count = var.app_services_enabled
+    #count = var.svc_running_tasks
     name    = "ecsstack-php-ecs-service"
     cluster = aws_ecs_cluster.ecsstack-ecs-cluster.id
     task_definition = aws_ecs_task_definition.ecsstack-php-task-definition.arn
-    desired_count   = 1
+    desired_count   = var.svc_running_tasks
     iam_role    = aws_iam_role.ecsstack-service-role.arn
     depends_on  = [aws_iam_policy_attachment.ecsstack-service-attach]
 
     load_balancer   {
         target_group_arn    = aws_lb_target_group.ecsstack-lb-target.arn
-        container_name  = var.phpapp_container_name
-        container_port  = 80
+        container_name      = var.phpapp_container_name
+        container_port      = 80
     }
 
     lifecycle {

@@ -22,6 +22,7 @@ resource "aws_lb" "ecsstack-lb" {
     idle_timeout = 400
 
 }
+
 # Listeners Definition
 resource "aws_lb_listener" "ecsstack-alb-php-listener" {
     load_balancer_arn   = aws_lb.ecsstack-lb.arn
