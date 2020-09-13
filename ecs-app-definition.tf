@@ -62,12 +62,12 @@ resource "aws_ecs_task_definition" "ecsstack-php-task-definition" {
 resource "aws_ecs_service" "ecsstack-ecs-service" {
     # Run this statement not only the first time
     #count = var.svc_running_tasks
-    name    = "ecsstack-ecs-service"
+    name    = "ecsstack-ecs-service-${substr(uuid(),0, 3)}"
     cluster = aws_ecs_cluster.ecsstack-ecs-cluster.id
     task_definition = aws_ecs_task_definition.ecsstack-task-definition.arn
     desired_count   = var.svc_running_tasks
     iam_role    = aws_iam_role.ecsstack-service-role.arn
-    depends_on  = [aws_iam_policy_attachment.ecsstack-service-attach]
+    depends_on  = [aws_iam_policy_attachment.ecsstack-service-attach, aws_lb_listener.ecsstack-alb-node-listener]
 
     load_balancer   {
         target_group_arn    = aws_lb_target_group.ecsstack-lb-node-target.arn
@@ -84,12 +84,12 @@ resource "aws_ecs_service" "ecsstack-ecs-service" {
 resource "aws_ecs_service" "ecsstack-php-ecs-service" {
     # Run this statement not only the first time
     #count = var.svc_running_tasks
-    name    = "ecsstack-php-ecs-service"
+    name    = "ecsstack-php-ecs-service-${substr(uuid(),0, 3)}"
     cluster = aws_ecs_cluster.ecsstack-ecs-cluster.id
     task_definition = aws_ecs_task_definition.ecsstack-php-task-definition.arn
     desired_count   = var.svc_running_tasks
     iam_role    = aws_iam_role.ecsstack-service-role.arn
-    depends_on  = [aws_iam_policy_attachment.ecsstack-service-attach]
+    depends_on  = [aws_iam_policy_attachment.ecsstack-service-attach, aws_lb_listener.ecsstack-alb-php-http-listener]
 
     load_balancer   {
         target_group_arn    = aws_lb_target_group.ecsstack-lb-target.arn

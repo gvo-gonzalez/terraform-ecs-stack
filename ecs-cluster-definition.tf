@@ -50,7 +50,7 @@ resource "aws_lb_listener" "ecsstack-alb-node-listener" {
     load_balancer_arn   = aws_lb.ecsstack-lb.arn
     ssl_policy          = "ELBSecurityPolicy-2016-08"
     certificate_arn     = var.ssl_certificate_arn
-    port                = 3000
+    port                = 443
     protocol            = "HTTPS"
     default_action      {
         target_group_arn    = aws_lb_target_group.ecsstack-lb-node-target.arn
@@ -68,12 +68,15 @@ resource "aws_lb_target_group" "ecsstack-lb-node-target" {
         healthy_threshold    = 5
         matcher             = "200-300"
     }
-    name    = "ecsstack-lb-node-target"
-    port    = 3000
+    name    = "ecsstack-lb-node-target-${substr(uuid(),0, 3)}"
+    port    = 8080
     protocol    = "HTTP"
     target_type = "instance"
     vpc_id  = aws_vpc.ecsstack-vpc.id 
-    depends_on = [aws_lb.ecsstack-lb]       
+    depends_on = [aws_lb.ecsstack-lb]
+    lifecycle {
+        create_before_destroy = true
+    }       
 }
 
 resource "aws_lb_target_group" "ecsstack-lb-target" {
@@ -85,12 +88,16 @@ resource "aws_lb_target_group" "ecsstack-lb-target" {
         healthy_threshold    = 5
         matcher             = "200-300"
     }
-    name    = "ecsstack-lb-target"
+    name    = "ecsstack-lb-target-${substr(uuid(),0, 3)}"
     port    = 80
     protocol    = "HTTP"
     target_type = "instance"
     vpc_id  = aws_vpc.ecsstack-vpc.id 
-    depends_on = [aws_lb.ecsstack-lb]       
+    depends_on = [aws_lb.ecsstack-lb] 
+    lifecycle {
+        create_before_destroy = true
+        ignore_changes = [name]
+    }      
 }
 
 # Autoscaling group definition attached to our ecs target group 

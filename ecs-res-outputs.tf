@@ -14,4 +14,7 @@ output "ecsstack-load-balancer" {
     value   = aws_lb.ecsstack-lb.dns_name
 }
 
+output "ecsstack-rds-backend" {
+    value   = aws_db_instance.ecsstack-backend-rds.endpoint
+}
 

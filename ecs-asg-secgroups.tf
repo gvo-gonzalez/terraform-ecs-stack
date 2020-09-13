@@ -24,6 +24,13 @@ resource "aws_security_group" "allow-http-https" {
         security_groups = [aws_security_group.ecsstack-lb.id]
     }
 
+    ingress {
+        from_port   = 8080
+        to_port     = 8080
+        protocol    = "tcp"
+        security_groups = [aws_security_group.ecsstack-lb.id]
+    }
+
     tags   = {
         name    = "allow-http-https"
     }
@@ -82,6 +89,13 @@ resource "aws_security_group" "ecsstack-lb" {
     ingress {
         from_port   = 3000
         to_port     = 3000
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        from_port   = 8080
+        to_port     = 8080
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }   
