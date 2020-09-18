@@ -8,11 +8,9 @@ variable    "asg_maxSize" {}
 variable    "pub_sshkey_path" {}
 variable    "jenkins_ec2_type" {}
 variable    "ebs_device_name" {}
-#variable    "jenkins_version" {}
 variable    "ecs_cluster_name" {}
 variable    "nodecontainer_name" {}
 variable    "nodeapp_working_dir" {}
-#variable    "ecr_node_repo_name" {}
 variable    "ecr_stack_repo_name" {}
 variable    "phpapp_container_name" {}
 variable    "phpapp_working_dir" {}
@@ -20,16 +18,6 @@ variable    "svc_running_tasks" {}
 variable    "nodeapp_version_on_setup" {}
 variable    "phpapp_version_on_setup" {}
 variable    "nginx_fastcgi_app" {}
-#variable    "nodeapp_container_memory_size"   {} 
-#variable    "nodeapp_container_cpu_size"      {}
-#variable    "nodeapp_host_port"               {}
-#variable    "nodeapp_container_port"          {}
-#variable    "nginx_container_memory_size"     {}
-#variable    "nginx_container_cpu_size"        {}
-#variable    "nginx_host_port"                 {}
-#variable    "nginx_container_port"            {}
-#variable    "app_container_memory_size"       {}
-#variable    "app_container_cpu_size"          {}
 
 # RDS Section
 variable db_param_group_family  {}
