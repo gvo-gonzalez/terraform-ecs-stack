@@ -17,10 +17,6 @@ data "template_file" "ecsstack-task-template" {
         NODE_REPOSITORY_URL     = replace(aws_ecr_repository.ecsstack-ecr-repo.repository_url, "https://", "")
         NODE_APP_WORK_DIR       = var.nodeapp_working_dir
         NODE_APP_VERSION        = var.nodeapp_version_on_setup
-#        NODE_MEMORY_SIZE        = var.nodeapp_container_memory_size
-#        NODE_CPU_SIZE           = var.nodeapp_container_cpu_size
-#        NODE_HOST_PORT          = var.nodeapp_host_port
-#        NODE_CONTAINER_PORT     = var.nodeapp_container_port
     }
 }
 
@@ -34,12 +30,6 @@ data "template_file" "ecsstack-php-task-template" {
         APP_WORK_DIR            = var.phpapp_working_dir
         APP_VERSION             = var.phpapp_version_on_setup
         BACKEND_APP             = var.nginx_fastcgi_app
-#        NGINX_MEMORY_SIZE       = var.nginx_container_memory_size
-#        NGINX_CPU_SIZE          = var.nginx_container_cpu_size
-#        NGINX_HOST_PORT         = var.nginx_host_port
-#        NGINX_CONTAINER_PORT    = var.nginx_container_port
-#        APP_MEMORY_SIZE         = var.app_container_memory_size
-#        APP_CPU_SIZE            = var.app_container_cpu_size
     }
 }
 
