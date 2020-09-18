@@ -1,6 +1,17 @@
-This project setups AWS ECS Stack to be used for running your containerized applications
+This project setups an AWS ECS Stack to be used for running your containerized applications
 
-Include a Jenkins(bastion host to your private instances) setup so you con apply CI/CD by :
+At first this stack is configured to setups:
+A service that runs a task definition with two containers:
+	- nginx
+	- laravel-app
+
+A service that runs a task definiton with one container:
+	- nodejs-app
+
+
+This includes a Jenkins server with public IP that runs as a bastion host to your private ECS instances and helps you apply CI/CD for your services :
+
+Project setup:
 
 	- clone your project
 	- building your images

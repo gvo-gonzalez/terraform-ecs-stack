@@ -98,8 +98,8 @@ resource "aws_ecs_service" "ecsstack-php-ecs-service" {
     }
 
     lifecycle {
-#        ignore_changes  = [task_definition]
-        create_before_destroy = true
+        ignore_changes = [task_definition, desired_count]
+	create_before_destroy = true
     }
 }
 
